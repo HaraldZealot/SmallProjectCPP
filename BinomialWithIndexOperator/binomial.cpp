@@ -4,6 +4,8 @@
 
 using namespace std;
 
+size_t gcd(size_t a, size_t b);
+
 size_t BinomialHelper::operator[](size_t col)
 {
     assert(col <= row); //элемент кантрактнага праграмавання
@@ -15,8 +17,25 @@ size_t BinomialHelper::operator[](size_t col)
     {
         numerator *= row - i + 1;
         denominator *= i;
-        // тут можна яшчэ дапісаць скараэчэнне дробу, як яшчэ адзін метад барацьбы з перапаўненнем
+        auto devisor = gcd(numerator, denominator);
+        numerator /= devisor;
+        denominator /= devisor;
     }
 
     return numerator / denominator;
+}
+
+size_t gcd(size_t a, size_t b)
+{
+    if(b == 0)
+        return a;
+
+    while(a % b != 0)
+    {
+        auto c = a % b;
+        a = b;
+        b = c;
+    }
+
+    return b;
 }
